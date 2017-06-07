@@ -1,0 +1,209 @@
+﻿namespace Quick_Sort
+{
+    class Program
+    {
+        public static int QuickSort(int[] Array)
+        {
+            if (Array.Length > 1)
+            {
+                QuickSort(Array, 0, Array.Length - 1);
+                return 0;
+            }
+
+            else
+            {
+                return -1;
+            }
+        }
+
+        private static void QuickSort(int[] Array, int left, int right)
+        {
+            int value = Array[(right+left)/2];
+            int i = left, j = right, k = 0;
+
+            while (i <= j)
+            {
+                while (Array[i] < value)
+                {
+                    i++;
+                }
+
+                while (Array[j] > value)
+                {
+                    j--;
+                }
+
+                if (i <= j)
+                {
+                    k = Array[i];
+                    Array[i] = Array[j];
+                    Array[j] = k;
+                    i++;
+                    j--;
+                }
+            }
+
+            if (i < right)
+            {
+                QuickSort(Array, i, right);
+            }
+
+            if (left < j)
+            {
+                QuickSort(Array, left, j);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+            TestoviyTriNumbers();
+            TestoviyArraySimilarNumbers();
+            TestoviyArrayTisaychaNumbers();
+            TestoviyPustoy();
+            TestoviyMegaArray();
+            Console.ReadKey();
+        }
+
+        private static void TestoviyTriNumbers()
+        {
+            int[] ThreeNumbers = { 228, 47, 0 };
+            QuickSort(ThreeNumbers, 0, ThreeNumbers.Length - 1);
+
+            if (ThreeNumbers[0] < ThreeNumbers[1] && ThreeNumbers[1] < ThreeNumbers[2])
+            {
+                Console.WriteLine("Quick sort of 3 numbers works correct!");
+            }
+
+            else
+            {
+                Console.WriteLine("! Quick Sort of 3 elements doesn't work correct");
+            }
+        }
+ 
+        private static void TestoviyArraySimilarNumbers()
+        {
+            bool error = false;
+            int[] SimilarNumbers = new int[100];
+
+            var rnd = new Random();
+
+            for (int i = 0; i < 100; i++)
+            {
+                SimilarNumbers[i] = 100;
+            }
+
+            QuickSort(SimilarNumbers, 0, SimilarNumbers.Length - 1);
+
+            for (int i = 0; i < 99; i++)
+            {
+                if (SimilarNumbers[i + 1] > SimilarNumbers[i])
+                {
+                    error = true;
+                    break;
+                }
+            }
+
+            if (error == true)
+            {
+                Console.WriteLine("! Quick sort of similar numbers doesn't work correct");
+            }
+
+            else
+            {
+                Console.WriteLine("Quick sort of similar numbers works correct!");
+            }
+        }
+
+        private static void TestoviyArrayTisaychaNumbers()
+        {
+            bool error = false;
+
+            int[] OneThousandNumbers = new int[1000];
+            var rnd = new Random();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                OneThousandNumbers[i] = rnd.Next(0, 999);
+            }
+
+            QuickSort(OneThousandNumbers, 0, OneThousandNumbers.Length - 1);
+
+            int counter = 0;
+
+            while (counter < 11)
+            {
+                int temp_1 = rnd.Next(0, 999);
+                int temp_2 = rnd.Next(0, 999);
+
+                if (OneThousandNumbers[temp_1] > OneThousandNumbers[temp_2] && temp_1 < temp_2)
+                {
+                    error = true;
+                    break;
+                }
+
+                counter++;
+            }
+
+            if (error == true)
+            {
+                Console.WriteLine("! Quick sort of 1000 numbers doens't work correct");
+            }
+
+            else
+            {
+                Console.WriteLine("Quick sort of 1000 numbers works correct!");
+            }
+        }
+ 
+        private static void TestoviyPustoy()
+        {
+            int[] Emptiness = new int[0];
+
+            if (QuickSort(Emptiness) != -1)
+            {
+                Console.WriteLine("! Quick sort of empty array doesn't work correct");
+            }
+
+            else
+            {
+                Console.WriteLine("Quick sort of empty array works correct!");
+            }
+        }
+
+         
+        private static void TestoviyMegaArray()
+        {
+            bool error = false;
+
+            int[] MegaArray = new int[1000000];
+
+            var rnd = new Random();
+
+            for (int i = 0; i < 1000000; i++)
+            {
+                MegaArray[i] = rnd.Next(0, 999999);
+            }
+
+            QuickSort(MegaArray, 0, MegaArray.Length - 1);
+
+            for (int i = 0; i < 999999; i++)
+            {
+                if (MegaArray[i + 1] < MegaArray[i])
+                {
+                    error = true;
+                    break;
+                }
+            }
+
+            if (error == true)
+            {
+                Console.WriteLine("! Quick sort of 1000000 numbers doesn't work correct");
+            }
+
+            else
+            {
+                Console.WriteLine("Quick sort of 1000000 numbers works correct!");
+            }
+        } 
+    }
+}

@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Reference
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Reference reference = new Reference();
+
+            string str = "";
+            Console.WriteLine("Enter: " + "\nAdd Name  PhoneNumber" + "\nSearch Name" + "\nDelete Name" + "\nExit\n");
+       
+            while (str != "Exit")
+            {
+                string line = Console.ReadLine();
+                string[] Data = line.Split(' ');
+
+                switch (Data[0])
+                {
+
+                    case "Add": reference.Add(Data[1], Data[2]); break;
+
+                    case "Search": reference.Search(Data[1]); break;
+
+                    case "Delete": reference.Delete(Data[1]); break;
+
+                    case "Exit": str = "Exit"; break;
+                }
+            }
+
+            Console.ReadKey();
+        }
+
+        class Abonent
+        {
+            public string Name;
+            public string PhoneNumber;
+
+            public Abonent(string Name, string PhoneNumber)
+            {
+                this.Name = Name;
+                this.PhoneNumber = PhoneNumber;
+            }
+        }
+
+        class Reference
+        {
+            private List<Abonent> list = new List<Abonent>();
+
+            public void Add(string Name, string PhoneNumber)
+            {
+                Abonent abonent = new Abonent(Name, PhoneNumber);
+                list.Add(abonent);
+            }
+
+            public void Search(string Name)
+            {
+                var error = 1;
+
+                foreach (var abonent in list)
+                {
+
+                    if (abonent.Name == Name)
+                    {
+                        Console.WriteLine("Your data is " + abonent.Name + " " + abonent.PhoneNumber);
+                        error = 0;
+                    }
+                }
+
+                if (error == 1)
+                {
+                    Console.WriteLine("No such Data");
+                }
+            }
+
+            public void Delete(string Name)
+            {
+
+                foreach (var abonent in list)
+                {
+
+                    if (abonent.Name == Name)
+                    {
+                        list.Remove(abonent);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}

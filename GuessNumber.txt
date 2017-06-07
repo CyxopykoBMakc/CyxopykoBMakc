@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Guessing number</title>
+</head>
+<body>
+	<script type="text/javascript">
+		alert("Ugaday chislo ot 0 do 100000!");
+
+		var down = 0;
+		var up = 100000;
+		var middle = Math.floor((up + down) / 2);
+		var counter = 0;
+		
+		while(counter < 16)
+		{
+			answer = prompt("Vach nomer bol'che chem " + middle + " (y/n)?");
+
+			if(answer == 'y' || answer == 'Y')
+			{
+				down = middle;
+				middle = Math.floor((up + down) / 2);
+				counter++;
+			}
+
+			else if(answer == 'n' || answer == 'N')
+			{
+				up = middle;
+				middle = Math.floor((up + down) / 2);
+				counter++;
+			}
+				
+			else
+			{
+				alert("Necorectnie simvol, poprobuyte snova.");
+			}
+		}
+		
+		if(counter == 16)
+		{
+			var answer = prompt("Eto " + middle + " vach nomer (y/n)?");
+
+			do
+			{
+				if(answer == 'y' || answer == 'Y')
+				{
+					alert("Well done!");
+					var openWindow;
+					openWindow.close();
+				}
+
+				else if(answer == 'n' || answer == 'N')
+				{
+					alert("Vi doljny ugasdat' chislo ot 0 do 100000.");
+					var openWindow;
+					openWindow.close();
+				}
+				
+				else
+				{
+					alert("Necorectnie simvol, poprobuyte snova.");
+				}
+			}
+			while(answer != 'y' || answer != 'Y'|| answer != 'n' || answer == 'N')
+		}
+	</script>
+</body>
+</html>

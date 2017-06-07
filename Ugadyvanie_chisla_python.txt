@@ -1,0 +1,44 @@
+﻿print("Vvedite chislo ot 0 do 100000! Eta programma ugadaet cho eto za chislo.")
+
+up = 100000;
+down = 0;
+
+middle = int((up + down) / 2)
+
+difference = up - down
+
+
+while difference > 1 :
+	print("Vach nomer bol'che chem ", middle, "(y/n)?")
+	answer = input()
+	
+	while answer != 'y' and  answer !='n' and answer != 'Y' and answer != 'N':
+		print("Vi vvely necorectnie dannye, poprobuyte snova.")
+		answer = input()
+
+	if answer == 'y' or answer == 'Y':
+		down = middle
+	
+	
+	elif answer == 'n' or answer == 'N' :
+		up = middle
+	
+	middle = int((up + down)/2)
+	
+	difference = up - down
+
+print("Vach nomer eto ", middle + 1)
+
+print("Eto tochno tvoy nomer? (y/n)?")
+yesno = input()
+	
+while yesno != 'y' and  yesno !='n' and yesno != 'Y' and yesno != 'N':
+	print("Vi vvely necorectnie dannye, poprobuyte snova.")
+
+if yesno == 'y' or yesno == 'Y'
+	print("Good job!")
+
+if yesno == 'n' or yesno == 'N'
+	print("Eto ne correctniy nomer! On doljen bit' ot 0 do 100000. Perezagruzite prilojenie!")
+	
+key = input("Press the Enter to exit.")

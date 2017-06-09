@@ -1,0 +1,188 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MinStat
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                TryTest1();
+                TryTest2();
+            }
+            catch (QueueIsEmptyException exception)
+            {
+                Console.WriteLine("Error: " + exception.Message);
+            }
+
+            Console.WriteLine("Press any key to exit.");
+            Console.ReadKey();
+        }
+
+        class Element
+        {
+            public int value { get; set; }
+            public Element next { get; set; }
+        }
+
+        class QueueWithMinStats
+        {
+            Element up;
+            Element down;
+
+            public void Enqueue(int val)
+            {
+                Element New = new Element();
+                New.value = val;
+
+                if (up == null)
+                {
+                    up = New;
+                    down = New;
+                }
+
+                else
+                {
+                    New.next = up;
+                    up = New;
+                }
+            }
+
+            public int Dequeue()
+            {
+                Element Current = up;
+                int val;
+
+                if (up != down)
+                {
+                    while (Current.next != down)
+                    {
+                        Current = Current.next;
+                    }
+
+                    val = down.value;
+                    down = Current;
+                    return val;
+                }
+
+                up = null;
+                down = null;
+                return int.MaxValue;
+            }
+            public int CurrentMiminum
+            {
+                get
+                {
+                    Element Current = up;
+
+                    if (Current == null)
+                    {
+                        throw new QueueIsEmptyException("Queue is empty!");
+                    }
+
+                    else
+                    {
+                        int minimum = Current.value;
+                        while (Current != down)
+                        {
+                            Current = Current.next;
+
+                            if (Current.value < minimum)
+                            {
+                                minimum = Current.value;
+                            }
+                        }
+                        return minimum;
+                    }
+                }
+            }
+        }
+
+        class QueueIsEmptyException : Exception
+        {
+            public QueueIsEmptyException(string message)
+                : base(message)
+            { }
+        }
+
+        private static void TryTest1()
+        {
+            QueueWithMinStats queueWithMinStat = new QueueWithMinStats();
+            bool error = true;
+
+            for (int j = 0; j < 1000; j++)
+            {
+                queueWithMinStat.Enqueue(j);
+                if (queueWithMinStat.CurrentMiminum != 0)
+                {
+                    error = false;
+                    break;
+                }
+            }
+
+            for (int j = 1; j < 1000; j++)
+            {
+                queueWithMinStat.Dequeue();
+                if (queueWithMinStat.CurrentMiminum != j)
+                {
+                    error = false;
+                    break;
+                }
+            }
+
+            if (error)
+            {
+                Console.WriteLine("1.Program works!");
+            }
+
+            else
+            {
+                Console.WriteLine("1.!!!!!!!!Program doesn't work!!!!!!!!!!");
+            }
+        }
+
+        private static void TryTest2()
+        {
+            QueueWithMinStats queueWithMinStat = new QueueWithMinStats();
+            bool error = true;
+            int minStat = 25;
+
+            for (int j = 0; j < 1000; j++)
+            {
+                queueWithMinStat.Enqueue(25);
+
+                if (queueWithMinStat.CurrentMiminum != minStat)
+                {
+                    error = false;
+                    break;
+                }
+            }
+
+            for (int j = 1; j < 1000; j++)
+            {
+                queueWithMinStat.Dequeue();
+                if (queueWithMinStat.CurrentMiminum != minStat)
+                {
+                    error = false;
+                    break;
+                }
+            }
+
+            if (error)
+            {
+                Console.WriteLine("2.Program works!");
+            }
+
+            else
+            {
+                Console.WriteLine("2.!!!!!!Program doesn't work!!!!!!");
+            }
+        }
+
+    }
+}
